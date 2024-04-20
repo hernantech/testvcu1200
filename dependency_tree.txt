@@ -4,11 +4,22 @@ So we can at least somewhat identify what classes need to be re-written (contain
 For files that have not been checked yet, their respective dependency tree will be marked as [UNCHECKED]
 
 bms1000m
-    -critical
-        -[UNCHECKED]
+    -critical = maybe needs to be changed?
+        -interrupt = needs changes
     -can_interface
-        -[UNCHECKED]
-    -can_receiver
-        -[UNCHECKED]
-    -error
-        -[UNCHECKED]
+        -hw_ints = needs changes
+        -hw_memmap = needs changes
+        -can = [UNCHECKED]
+        -gpio = [UNCHECKED]
+        -interrupt = [UNCHECKED]
+        -sysctl = [UNCHECKED]
+    -can_receiver = [UNCHECKED]
+    -error = [UNCHECKED]
+
+Here is a list of all classes identified that are required to be modified:
+
+1) driverlib/interrupt
+2) inc/hw_ints
+3) inc/hw_memmap
+
+Please open issues for these classes in the issues tab
