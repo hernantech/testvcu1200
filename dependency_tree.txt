@@ -1,0 +1,14 @@
+This file is just a way to visually track the dependencies of the bms1000m class.
+So we can at least somewhat identify what classes need to be re-written (contains code that is TI specific)
+
+For files that have not been checked yet, their respective dependency tree will be marked as [UNCHECKED]
+
+bms1000m
+    -critical
+        -[UNCHECKED]
+    -can_interface
+        -[UNCHECKED]
+    -can_receiver
+        -[UNCHECKED]
+    -error
+        -[UNCHECKED]
