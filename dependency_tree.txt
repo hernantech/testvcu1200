@@ -9,17 +9,26 @@ bms1000m
     -can_interface
         -hw_ints = needs changes
         -hw_memmap = needs changes
-        -can = [UNCHECKED]
-        -gpio = [UNCHECKED]
-        -interrupt = [UNCHECKED]
-        -sysctl = [UNCHECKED]
-    -can_receiver = [UNCHECKED]
+        -can = needs changes
+        -gpio = needs changes
+        -interrupt = duplicate
+        -sysctl = needs changes
+        -can_message = okay
+        -can_receiver = duplicate
+    -can_receiver
+        -can = duplicate
+        -can_ports = okay
     -error = [UNCHECKED]
 
 Here is a list of all classes identified that are required to be modified:
 
-1) driverlib/interrupt
-2) inc/hw_ints
-3) inc/hw_memmap
+1) driverlib/interrupt = major changes
+2) inc/hw_ints = major changes
+3) inc/hw_memmap = major changes
+4) driverlib/can = moderate changes / deeper reading
+5) driverlib/gpio = major changes
+6) driverlib/sysctl = major changes
+7) Library/critical = minor changes
+8) Library/can_receiver = minor changes
 
 Please open issues for these classes in the issues tab
