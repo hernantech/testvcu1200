@@ -1,5 +1,9 @@
 #include <stdint.h>
 
+// see driverLib/can.h for more on these definitions
+#define MSG_OBJ_RX_INT_ENABLE   0x00000002
+#define MSG_OBJ_USE_ID_FILTER   0x00000008
+
 //*****************************************************************************
 //
 //! The structure used for encapsulating all the items associated with a CAN
