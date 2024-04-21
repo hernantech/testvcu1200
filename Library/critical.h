@@ -17,7 +17,8 @@
 
 #include <stdint.h>
 
-#include "driverlib/interrupt.h"
+// #include "driverlib/interrupt.h"
+#include "../stm32/dummy_stm32.h"
 
 // Disable interrupts to prevent code from being disrupted
 void enter_critical_section();
@@ -29,6 +30,6 @@ void exit_critical_section();
 	Loop until either condition exists or cycle count is exceeded
 	Return true if condition satisfied, return false if timeout
 */
-bool timeout_loop(volatile unsigned char& reg, unsigned char bit_mask, bool condition, unsigned int cycle_count = 1000);
+bool timeout_loop(volatile unsigned char &reg, unsigned char bit_mask, bool condition, unsigned int cycle_count = 1000);
 
 #endif /* CRITICAL_H_ */

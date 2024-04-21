@@ -18,14 +18,16 @@ static bool c_interrupts_enabled;
 
 void enter_critical_section()
 {
-	c_interrupts_enabled = !IntMasterDisable();
+	// c_interrupts_enabled = !IntMasterDisable();
+		c_interrupts_enabled = !dummy_stm32::disable_processor_interrupt();
 }
 
 void exit_critical_section()
 {
 	if (c_interrupts_enabled)
 	{
-		IntMasterEnable();
+		// IntMasterEnable();
+		dummy_stm32::enable_processor_interrupt();
 	}
 }
 
