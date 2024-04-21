@@ -16,9 +16,11 @@
 
 #include <stdint.h>
 
-#include "driverlib/can.h"
+// #include "driverlib/can.h"
 
 #include "can_ports.h"
+
+#include "../dummy_stm32/stm32_can.h"
 
 class CANReceiver
 {
