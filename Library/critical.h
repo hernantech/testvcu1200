@@ -18,7 +18,7 @@
 #include <stdint.h>
 
 // #include "driverlib/interrupt.h"
-#include "../stm32/dummy_stm32.h"
+#include "../dummy_stm32/stm32.h"
 
 // Disable interrupts to prevent code from being disrupted
 void enter_critical_section();

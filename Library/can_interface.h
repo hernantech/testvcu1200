@@ -11,15 +11,17 @@
 #include <stdint.h>
 
 // #include "inc/hw_ints.h"
-#include "inc/hw_memmap.h"
+// #include "inc/hw_memmap.h"
 
-#include "driverlib/can.h"
-#include "driverlib/gpio.h"
+// #include "driverlib/can.h"
+// #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/sysctl.h"
 
 #include "can_message.h"
 #include "can_receiver.h"
+
+#include "../dummy_stm32/gpio.h"
 
 // CAN Interface Class
 class CANInterface

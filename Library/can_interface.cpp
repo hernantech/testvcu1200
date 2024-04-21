@@ -82,7 +82,8 @@ void CANInterface::initialize(CANBaudRate baud)
 	IntEnable(interrupt_address);
 
 	// Turn On CAN Transceiver
-	GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	//GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	stm32_gpio::gpio_write(stm32_gpio::GPIO_PORTB_BASE, stm32_gpio::GPIO_PIN_1, stm32_gpio::GPIO_PIN_1);
 
 	// Enable the CAN port
 	CANEnable(base_address);
