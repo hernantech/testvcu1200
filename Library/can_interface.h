@@ -15,13 +15,15 @@
 
 // #include "driverlib/can.h"
 // #include "driverlib/gpio.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/sysctl.h"
+// #include "driverlib/interrupt.h"
+// #include "driverlib/sysctl.h"
 
 #include "can_message.h"
 #include "can_receiver.h"
 
-#include "../dummy_stm32/gpio.h"
+#include "../dummy_stm32/stm32_gpio.h"
+#include "../dummy_stm32/stm32_interrupt.h"
+#include "../dummy_stm32/stm32_sysctl.h"
 
 // CAN Interface Class
 class CANInterface

@@ -53,7 +53,7 @@ uint32_t CANInterface::getBitRate(CANBaudRate baud)
 	}
 }
 
-CANReceiver* CANInterface::getHandler(unsigned int mailbox)
+CANReceiver *CANInterface::getHandler(unsigned int mailbox)
 {
 	return handler_map[mailbox - 16];
 }
@@ -61,16 +61,17 @@ CANReceiver* CANInterface::getHandler(unsigned int mailbox)
 void CANInterface::initialize(CANBaudRate baud)
 {
 	// Enable CAN Peripheral
-	SysCtlPeripheralEnable(sysctl_address);
+	stm32_sysctl::peripheralEnable(sysctl_address);
 
 	// Wait for CAN peripherals to become available
-	SysCtlDelay(5);
+	//SysCtlDelay(5);
+	stm32_sysctl::delay(5);
 
 	// Clear CAN memory
 	CANInit(base_address);
 
 	// Set CAN baud rate
-	CANBitRateSet(base_address, SysCtlClockGet(), getBitRate(baud));
+	CANBitRateSet(base_address, stm32_sysctl::getClock(), getBitRate(baud));
 
 	// Enable Automatic Retransmission if Error
 	CANRetrySet(base_address, true);
@@ -79,17 +80,18 @@ void CANInterface::initialize(CANBaudRate baud)
 	CANIntEnable(base_address, CAN_INT_MASTER | CAN_INT_ERROR | CAN_INT_STATUS);
 
 	// Enable CAN interrupt on the processor (NVIC)
-	IntEnable(interrupt_address);
+	// IntEnable(interrupt_address);
+	stm32_interrupts::enable_specified_interrupt(interrupt_address);
 
 	// Turn On CAN Transceiver
-	//GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, GPIO_PIN_1);
+	// GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_1, GPIO_PIN_1);
 	stm32_gpio::gpio_write(stm32_gpio::GPIO_PORTB_BASE, stm32_gpio::GPIO_PIN_1, stm32_gpio::GPIO_PIN_1);
 
 	// Enable the CAN port
 	CANEnable(base_address);
 }
 
-bool CANInterface::initializeReceiveMessage(CANReceiver* handler, tCANMsgObject* message)
+bool CANInterface::initializeReceiveMessage(CANReceiver *handler, tCANMsgObject *message)
 {
 	if (can_rx_box >= 31)
 	{
@@ -110,14 +112,14 @@ bool CANInterface::initializeReceiveMessage(CANReceiver* handler, tCANMsgObject*
 	return true;
 }
 
-void CANInterface::sendMessage(CANMessage* msg)
+void CANInterface::sendMessage(CANMessage *msg)
 {
 	// Setup CAN Packet
 	can_tx_message.ui32MsgID = msg->getID();
-	can_tx_message.ui32MsgIDMask = 0;					// No Mask Needed on TX
-	can_tx_message.ui32MsgLen = msg->getLength();		// Data Length Code
-	can_tx_message.ui32Flags = MSG_OBJ_NO_FLAGS;		// Enable Interrupts
-	can_tx_message.pui8MsgData = msg->getData();		// Pointer to message data
+	can_tx_message.ui32MsgIDMask = 0;			  // No Mask Needed on TX
+	can_tx_message.ui32MsgLen = msg->getLength(); // Data Length Code
+	can_tx_message.ui32Flags = MSG_OBJ_NO_FLAGS;  // Enable Interrupts
+	can_tx_message.pui8MsgData = msg->getData();  // Pointer to message data
 
 	// Check for Extended ID
 	if (msg->getIDSize() == CANMessage::ID_EXTENDED)
@@ -128,11 +130,12 @@ void CANInterface::sendMessage(CANMessage* msg)
 	// Make sure we are only using valid mailboxes
 	if (can_tx_box > 16)
 	{
-		return;	// Too many messages have been sent this tick
+		return; // Too many messages have been sent this tick
 	}
 
 	// Enter Critical Section for CAN Transmission
-	IntDisable(interrupt_address);
+	// IntDisable(interrupt_address);
+	stm32_interrupts::disable_specified_interrupt(interrupt_address);
 
 	// Send CAN Message
 	CANMessageSet(base_address, can_tx_box, &can_tx_message, MSG_OBJ_TYPE_TX);
@@ -141,7 +144,8 @@ void CANInterface::sendMessage(CANMessage* msg)
 	can_tx_box++;
 
 	// Exit Critical Section
-	IntEnable(interrupt_address);
+	// IntEnable(interrupt_address);
+	stm32_interrupts::disable_specified_interrupt(interrupt_address);
 }
 
 void CANInterface::tick()
@@ -152,4 +156,3 @@ void CANInterface::tick()
 		can_tx_box = 1;
 	}
 }
-
