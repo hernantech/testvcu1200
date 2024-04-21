@@ -7,21 +7,24 @@
 
 #include "can_interface.h"
 
-CANInterface::CANInterface(uint32_t can_base_address)
+CANInterface::CANInterface(uint32_t can_base_address, uint32_t can_interrupt_address, uint32_t can_sysctl_address)
 {
 	base_address = can_base_address;
 
 	// Enable CAN interrupt on the processor (NVIC)
-	if (base_address == CAN0_BASE)
-	{
-		interrupt_address = INT_CAN0;
-		sysctl_address = SYSCTL_PERIPH_CAN0;
-	}
-	else if (base_address == CAN1_BASE)
-	{
-		interrupt_address = INT_CAN1;
-		sysctl_address = SYSCTL_PERIPH_CAN1;
-	}
+	// if (base_address == CAN0_BASE)
+	// {
+	// 	interrupt_address = INT_CAN0;
+	// 	sysctl_address = SYSCTL_PERIPH_CAN0;
+	// }
+	// else if (base_address == CAN1_BASE)
+	// {
+	// 	interrupt_address = INT_CAN1;
+	// 	sysctl_address = SYSCTL_PERIPH_CAN1;
+	// }
+
+	interrupt_address = can_interrupt_address;
+	sysctl_address = can_sysctl_address;
 
 	can_tx_box = 1;
 

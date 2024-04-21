@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#include "inc/hw_ints.h"
+// #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 
 #include "driverlib/can.h"
@@ -26,7 +26,7 @@ class CANInterface
 {
 public:
 	// Constructor
-	CANInterface(uint32_t can_base_address);
+	CANInterface(uint32_t can_base_address, uint32_t can_interrupt_address, uint32_t can_sysctl_address);
 
 	// Supported CAN Baud Rates
 	enum CANBaudRate
